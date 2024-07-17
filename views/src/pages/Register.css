@@ -1,0 +1,76 @@
+.register-page {
+    background-color: rgb(20, 192, 166);
+    height: 100vh;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    margin-left: 550px;
+    margin-right: 550px;
+    padding: 20px;
+    /* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    background-color: rgba(4, 191, 129, 0.896); */
+    border-radius: 20px;
+}
+
+.head {
+    font-size: 50px;
+    font-family: monospace;
+    padding-top: 50px;
+    font-weight: bold;
+    margin-bottom: 0px;
+
+
+}
+
+.form-group {
+    margin-top: 20px;
+
+}
+
+.form-group label {
+    margin-right: 150px;
+    margin-bottom: 0px;
+}
+
+.form-group input {
+    width: 350px;
+    border-radius: 15px;
+
+}
+
+.register-button button {
+    width: 350px;
+    margin-top: 20px;
+    border-radius: 15px;
+    background-color: rgb(228, 91, 91);
+    border: 2px solid rgb(220, 89, 89);
+}
+
+.routed-path {
+    font-size: 18px;
+    margin-left: 20px;
+
+}
+
+.routed-path button {
+    background-color: rgb(244, 102, 102);
+    border-radius: 20px;
+    margin-left: 5px;
+    border: none;
+
+}
+
+.routed-path a {
+    /* margin-left: 10px; */
+    text-decoration: none;
+    color: white;
+    font-family: monospace;
+    padding: 3px;
+}
