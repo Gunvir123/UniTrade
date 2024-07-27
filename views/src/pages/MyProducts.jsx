@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import { FaHeart } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { FaPencil } from "react-icons/fa6";
 const MyProducts = () => {
 
     const [products, setProducts] = useState([]);
@@ -63,8 +65,8 @@ const MyProducts = () => {
 
     return (
         <div>
-            <h1>MY ADDED PRODUCTS:-</h1>
-            <div className='container-fluid'>
+            <h3 className='text-center mt-3'>MY ADDED PRODUCTS</h3>
+            <div className='container-fluid mt-3'>
                 <div className='row justify-content-center'>
                     {products && products.length > 0 && products.map((item, index) => (
                         <div key={item._id} className='col-lg-3 col-md-4 col-sm-6 mb-4' >
@@ -74,9 +76,11 @@ const MyProducts = () => {
                                 <div className='card-body d-flex flex-column'>
                                     <p className='card-text'>{item.pname} | {item.pcat}</p>
                                     <p className='card-text'>{item.pdesc}</p>
-                                    <h3>{item.pprice}</h3>
-                                    <button onClick={() => deleteProduct(item._id)}>delete</button>
-                                    <button onClick={() => updateProduct(item._id)}>update</button>
+                                    <h3>{item.pprice}/-</h3>
+                                    <div className='d-flex' style={{ marginLeft: '240px' }}>
+                                        <MdDelete onClick={() => deleteProduct(item._id)} fontSize={'25px'} />
+                                        <FaPencil onClick={() => updateProduct(item._id)} fontSize={'25px'} style={{ marginLeft: '15px' }} />
+                                    </div>
 
 
                                 </div>

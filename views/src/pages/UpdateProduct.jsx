@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import './AddProduct.css'
 const UpdateProduct = () => {
 
     const productId = useParams().id;
@@ -74,10 +75,10 @@ const UpdateProduct = () => {
     return (
         <div>
 
-            <h1>Update your Product Here!</h1>
 
-            <form onSubmit={submitHandler} >
-                <div class="form-group">
+            <form onSubmit={submitHandler} className='product-box'>
+                <h3>Update your Product Here!</h3>
+                <div class="form-group" >
                     <label for="exampleInputEmail1">Product Name</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={pname} onChange={(e) => { setPname(e.target.value) }} />
 

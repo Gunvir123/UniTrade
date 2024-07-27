@@ -25,7 +25,7 @@ function Login() {
                 localStorage.setItem("username", data.username);
                 localStorage.setItem("userId", data.id);
                 alert("user logged in!");
-                navigate('/dash');
+                navigate('/');
             }
             else {
                 alert(data.message);

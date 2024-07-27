@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
+import './MyProfile.css'
+import image from '../assests/discussion-profile.png'
 const MyProfile = () => {
 
     const [username, setUsername] = useState('');
@@ -16,34 +17,55 @@ const MyProfile = () => {
 
     useEffect(() => { getDetails() }, []);
 
+    const handleChange = async (e) => {
+        e.preventDefault();
+        const userId = localStorage.getItem('userId');
+        const { data } = await axios.patch('/my-profile', { userId, username, email, contact });
+        console.log(data);
+        if (data.success) {
+            localStorage.setItem("username", data.data.username);
+            localStorage.setItem("email", data.data.email);
+            alert('data updated successfully');
+
+
+        }
+
+        else {
+            alert('error updating details ');
+        }
+    }
+
 
     return (
         <>
-            <h2 className='text-center mt-2'>USER PROFILE</h2>
+            <h3 className='text-center mt-2'>User Profile</h3>
 
-            <div className='mt-2 ml-5 mr-5'>
+            <img src={image} alt="" width={"150px"} height={"150px"} className='mt-3 text-center' style={{ marginLeft: '45vw' }} />
 
-                <table className="table table-hover mt-5  ">
-                    <thead>
-                        <tr>
+            <form style={{ width: '50vw', marginLeft: '30vw' }} className='profile-form' onSubmit={handleChange}>
 
-                            <th scope="col">Username</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Contact</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} />
 
-                            <td>{username}</td>
-                            <td>{email}</td>
-                            <td>{contact}</td>
-                        </tr>
 
-                    </tbody>
-                </table>
-            </div>
+                </div>
 
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
+
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Contact</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value={contact} onChange={(e) => setContact(e.target.value)} />
+
+                </div>
+
+
+                <button type="submit" class="btn btn-danger" style={{ width: '60vw' }}>Save changes</button>
+            </form>
         </>
 
     )

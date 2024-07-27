@@ -94,7 +94,7 @@ const likedProductController = async (req, res) => {
 
 const getLikedProducts = async (req, res) => {
     const userId = req.body.userId;
-
+    console.log(userId);
     const data = await userModel.findOne({ _id: userId }).populate("likedProducts");
 
     return res.json({

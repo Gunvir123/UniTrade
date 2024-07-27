@@ -14,26 +14,26 @@ const Header = () => {
     let navigate = useNavigate();
     const [isLiked, setIsLiked] = useState(false);
     const [likedProducts, setLikedProducts] = useState([]);
-    useEffect(() => {
-        const getProducts = async () => {
-            try {
+    // useEffect(() => {
+    //     const getProducts = async () => {
+    //         try {
 
-                const userId = localStorage.getItem("userId");
+    //             const userId = localStorage.getItem("userId");
 
-                const data = await axios.post('/get-liked-products', {
+    //             const { data } = await axios.post('/get-liked-products', {
 
-                    userId: userId
+    //                 userId: userId
 
-                });
-                //console.log(data.data.data);
-                setLikedProducts(data.data.data);
+    //             });
+    //             console.log(data);
+    //             setLikedProducts(data.likedProducts);
 
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getProducts();
-    }, [])
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     getProducts();
+    // }, [])
     //logout functionality
     const clickHandler = () => {
         const val = window.confirm("are you sure you want to log out");
@@ -226,7 +226,7 @@ const Header = () => {
                                 <div className='card-body d-flex flex-column'>
                                     <p className='card-text'>{item.pname} | {item.pcat}</p>
                                     <p className='card-text'>{item.pdesc}</p>
-                                    <h3>{item.pprice}</h3>
+                                    <h3>{item.pprice}/-</h3>
 
                                 </div>
                             </div>

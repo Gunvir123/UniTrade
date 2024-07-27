@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './AddProduct.css'
 const AddProduct = () => {
 
 
@@ -50,14 +51,14 @@ const AddProduct = () => {
 
 
     return (
-        <div>
+        <div >
 
-            <h1>Add your Product Here!</h1>
 
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className='product-box'>
+                <h3 className='text-center mt-3'>Add your Product Here!</h3>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Product Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={pname} onChange={(e) => { setPname(e.target.value) }} />
+                    <input type="text" class="form-control " id="exampleInputEmail1" aria-describedby="emailHelp" value={pname} onChange={(e) => { setPname(e.target.value) }} />
 
                 </div>
                 <div class="form-group">
@@ -92,3 +93,5 @@ const AddProduct = () => {
 }
 
 export default AddProduct
+
+

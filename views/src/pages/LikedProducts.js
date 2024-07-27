@@ -26,7 +26,7 @@ const LikedProducts = () => {
             const { data } = await axios.post('/disliked-products', { userId: userId, productId: productId });
             console.log(data);
             alert(data.message);
-            navigate('/liked-products');
+            //navigate('/liked-products');
         }
 
 
@@ -43,7 +43,8 @@ const LikedProducts = () => {
                     userId: userId
 
                 });
-                console.log(data.data.data);
+
+                //console.log(data.data.data);
                 setProducts(data.data.data);
 
             } catch (error) {
@@ -61,7 +62,7 @@ const LikedProducts = () => {
 
     return (
         <div>
-            <h1>YOUR LIKED PRODUCTS:-</h1>
+            <h3 className='text-center mt-3'>YOUR LIKED PRODUCTS</h3>
             {/* <div className='d-flex justify-content-center flex-wrap'>
                 {products.length > 0 && products.map((item, index) => {
                     return (
@@ -80,7 +81,7 @@ const LikedProducts = () => {
 
             </div> */}
 
-            <div className='container-fluid'>
+            <div className='container-fluid mt-3'>
                 <div className='row justify-content-center'>
                     {products && products.length > 0 && products.map((item, index) => (
                         <div key={item._id} className='col-lg-3 col-md-4 col-sm-6 mb-4' onClick={() => handleProduct(item._id)}>
@@ -90,7 +91,7 @@ const LikedProducts = () => {
                                 <div className='card-body d-flex flex-column'>
                                     <p className='card-text'>{item.pname} | {item.pcat}</p>
                                     <p className='card-text'>{item.pdesc}</p>
-                                    <h3>{item.pprice}</h3>
+                                    <h3>{item.pprice}/-</h3>
 
                                 </div>
                             </div>

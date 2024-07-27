@@ -1,15 +1,23 @@
 const express = require("express");
-const { registerController, loginController, getContactDetails, myProfile } = require("./controllers/userController");
+const { registerController, loginController, getContactDetails, myProfile, updateProfile } = require("./controllers/userController");
 const { addProductController, getProductController, likedProductController, getLikedProducts, productDetail, getMyProducts, deleteProduct, updateProduct, dislikedProductController } = require("./controllers/productController");
 const connectDb = require("./models/db");
 const cors = require('cors');
 const multer = require("multer");
 const path = require("path");
+const http = require("http");
+const { Server } = require("socket.io");
+const { Socket } = require("dgram");
 // const { default: App } = require("./views/src/App");
 
 //creating app
 const app = express();
-
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+        origin: '*'
+    }
+});
 //middlewares
 app.use(express.json());
 app.use(cors());
@@ -41,15 +49,28 @@ app.get('/product-detail/:id', productDetail);
 app.post('/get-contact', getContactDetails);
 app.post('/my-products', getMyProducts);
 app.post('/my-profile', myProfile);
+app.patch('/my-profile', updateProfile)
 app.post('/delete-my-product', deleteProduct);
 app.post('/update-product', updateProduct);
 
-
+let messages = [];
 
 
 //mongodb connection
 connectDb();
 
-app.listen(8081, () => {
+io.on('connection', (socket) => {
+    console.log('socket connected', socket.id);
+    socket.on('sendMsg', (data) => {
+        messages.push(data);
+        console.log(data);
+        io.emit('getMsg', messages);
+
+    })
+
+    io.emit('getMsg', messages);
+})
+
+httpServer.listen(8081, () => {
     console.log("hello");
 })

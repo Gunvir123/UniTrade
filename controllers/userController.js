@@ -102,4 +102,18 @@ const myProfile = async (req, res) => {
     })
 }
 
-module.exports = { registerController, loginController, getContactDetails, myProfile };
+const updateProfile = async (req, res) => {
+    const id = req.body.userId;
+    const username = req.body.username;
+    const email = req.body.email;
+    const contact = req.body.contact;
+    let data = await userModel.updateOne({ _id: id }, { $set: { username: username, email: email, mobile: contact } });
+    data = await userModel.findOne({ _id: id });
+    res.json({
+        message: "detailes fetched successfully",
+        data: data,
+        success: true
+    })
+}
+
+module.exports = { registerController, loginController, getContactDetails, myProfile, updateProfile };

@@ -78,6 +78,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './ProductDetail.css'; // Import your CSS file for custom styling
+import io from 'socket.io-client';
+import image from '../assests/discussion-profile.png'
+
+
+let socket;
 
 const ProductDetail = () => {
     const productId = useParams().id;
@@ -85,7 +90,6 @@ const ProductDetail = () => {
     const [user, setUser] = useState('');
     const [email, setEmail] = useState('');
     const [mobile, setMobile] = useState('');
-
     useEffect(() => {
         const getDetails = async () => {
             try {
@@ -98,6 +102,7 @@ const ProductDetail = () => {
         getDetails();
     }, [productId]);
 
+
     const handleContact = async (id) => {
         try {
             const { data } = await axios.post('/get-contact', { id });
@@ -109,6 +114,40 @@ const ProductDetail = () => {
             console.error('Error fetching contact details:', error);
         }
     };
+    const [msg, setmsg] = useState('');
+    const [allMessages, setAllMessages] = useState([]);
+    useEffect(() => {
+        socket = io('http://localhost:8081');
+        socket.on('connect', () => {
+            console.log('connection ');
+        });
+        socket.on('getMsg', (data) => {
+
+            const _data = data.filter((item, index) => {
+                return item.productId === productId
+            })
+
+            setAllMessages(_data);
+            console.log('data received is ', data);
+        })
+    }, []);
+
+
+    const handleSend = () => {
+        const data = {
+            username: localStorage.getItem("username"),
+            msg,
+            productId: productId
+        }
+
+        try {
+            socket.emit('sendMsg', data);
+            setmsg('');
+
+        } catch (error) {
+            console.log("error sending the data", error);
+        }
+    }
 
     return (
         <div className="container mt-4">
@@ -124,14 +163,29 @@ const ProductDetail = () => {
                         <div className="product-details">
                             <h2 className="product-name">{product.pname} | {product.pcat}</h2>
                             <h3 className="product-price">Rs.{product.pprice}/-</h3>
-                            <button className="btn btn-primary btn-show-contact" onClick={() => handleContact(product.addedBy)}>Show Contact Details</button>
+                            <button className="btn btn-info btn-show-contact" onClick={() => handleContact(product.addedBy)}>Show Contact Details</button>
                             {user && <div className="contact-info">User: {user}</div>}
                             {email && <div className="contact-info">Email: {email}</div>}
                             {mobile && <div className="contact-info">Mobile: {mobile}</div>}
                         </div>
                     </div>
+
+
                 </div>
             )}
+            <hr />
+            <div>
+                <h4>Discussion</h4>
+                <input type="text " value={msg} onChange={(e) => setmsg(e.target.value)} style={{ width: '60vw' }} /><button className='btn btn-success ' style={{ marginLeft: '20px' }} onClick={handleSend}>Send</button>
+                {allMessages.map((item, index) => {
+                    if (item.username === localStorage.getItem('username'))
+                        return (<p><img src={image} height={'40px'} width={'40px'} alt="" ></img><b>You</b> : {item.msg}</p>);
+                    else {
+                        return (<p><img src={image} alt="" height={'40px'} width={'40px'} ></img><b>{item.username}</b> : {item.msg}</p>);
+                    }
+                })}
+
+            </div>
         </div>
     );
 };
